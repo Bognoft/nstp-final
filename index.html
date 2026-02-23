@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Secret Password Builder 🔒</title>
+    <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background: #ffd93d;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Image placeholders for brainrot content - as background decorations */
+        .bg-image {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            border: 3px dashed rgba(255, 255, 255, 0.5);
+            overflow: hidden;
+            z-index: 0;
+            animation: floatBackground 15s infinite ease-in-out;
+        }
+
+        .bg-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 17px;
+        }
+
+        .bg-image:nth-child(1) {
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+
+        .bg-image:nth-child(2) {
+            top: 15%;
+            right: 8%;
+            width: 320px;
+            height: 320px;
+            animation-delay: 2s;
+        }
+
+        .bg-image:nth-child(3) {
+            bottom: 15%;
+            left: 10%;
+            width: 330px;
+            height: 330px;
+            animation-delay: 4s;
+        }
+
+        .bg-image:nth-child(4) {
+            bottom: 10%;
+            right: 5%;
+            width: 340px;
+            height: 340px;
+            animation-delay: 6s;
+        }
+
+        @media (max-width: 768px) {
+            .bg-image {
+                width: 300px;
+                height: 300px;
+                font-size: 2em;
+            }
+            
+            .bg-image:nth-child(2),
+            .bg-image:nth-child(3),
+            .bg-image:nth-child(4) {
+                width: 180px;
+                height: 180px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .bg-image {
+                width: 70px;
+                height: 70px;
+                font-size: 1.5em;
+            }
+            
+            .bg-image:nth-child(2),
+            .bg-image:nth-child(3),
+            .bg-image:nth-child(4) {
+                width: 160px;
+                height: 160px;
+            }
+        }
+
+        @keyframes floatBackground {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        /* Story Modal Styles */
+        .story-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .story-modal.hidden {
+            display: none;
+        }
+
+        .story-content {
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .story-title {
+            font-family: 'Chewy', cursive;
+            font-size: 2.5em;
+            color: #ff4757;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0 #ffd93d;
+            line-height: 1.2;
+            position: relative;
+            z-index: 2;
+        }
+
+        @media (max-width: 480px) {
+            .story-title {
+                font-size: 1.8em;
+            }
+        }
+
+        .story-villain-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
+        }
+
+        .story-villain {
+            width: 100px;
+            height: 100px;
+            background: #f0f0f0;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            border: 4px solid #ff4757;
+            animation: wiggle 1s infinite;
+            position: relative;
+        }
+
+        .story-villain img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 16px;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(-3deg); }
+            50% { transform: rotate(3deg); }
+        }
+
+        .story-villain:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .story-villain:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .story-villain:nth-child(4) {
+            animation-delay: 0.6s;
+        }
+
+        .story-villain:nth-child(5) {
+            animation-delay: 0.8s;
+        }
+
+        @media (max-width: 480px) {
+            .story-villain {
+                width: 70px;
+                height: 70px;
+                font-size: 2em;
+            }
+        }
+
+        /* Floating brainrot images in the story modal */
+        .story-bg-image {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 217, 61, 0.2);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            border: 2px dashed rgba(255, 217, 61, 0.4);
+            overflow: hidden;
+            animation: floatStory 10s infinite ease-in-out;
+        }
+
+        .story-bg-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 13px;
+        }
+
+        .story-bg-image:nth-child(1) {
+            top: 5%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+
+        .story-bg-image:nth-child(2) {
+            top: 10%;
+            right: 5%;
+            animation-delay: 1s;
+            width: 70px;
+            height: 70px;
+        }
+
+        .story-bg-image:nth-child(3) {
+            bottom: 15%;
+            left: 8%;
+            animation-delay: 2s;
+            width: 75px;
+            height: 75px;
+        }
+
+        .story-bg-image:nth-child(4) {
+            bottom: 10%;
+            right: 8%;
+            animation-delay: 3s;
+        }
+
+        @keyframes floatStory {
+            0%, 100% { transform: translateY(0px) rotate(-5deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+
+        @media (max-width: 768px) {
+            .story-bg-image {
+                width: 160px;
+                height: 160px;
+                font-size: 1.5em;
+            }
+            
+            .story-bg-image:nth-child(2),
+            .story-bg-image:nth-child(3),
+            .story-bg-image:nth-child(4) {
+                width: 150px;
+                height: 150px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .story-bg-image {
+                width: 40px;
+                height: 40px;
+                font-size: 1em;
+            }
+            
+            .story-bg-image:nth-child(2),
+            .story-bg-image:nth-child(3),
+            .story-bg-image:nth-child(4) {
+                width: 135px;
+                height: 135px;
+            }
+        }
+
+        .story-text {
+            font-size: 1.3em;
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        @media (max-width: 480px) {
+            .story-text {
+                font-size: 1.1em;
+            }
+        }
+
+        .story-warning {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+            color: white;
+            padding: 20px;
+            border-radius: 20px;
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 30px;
+            animation: pulse 2s infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @media (max-width: 480px) {
+            .story-warning {
+                font-size: 1em;
+                padding: 15px;
+            }
+        }
+
+        .start-button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            font-size: 1.5em;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            animation: glow 2s infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4); }
+            50% { box-shadow: 0 10px 40px rgba(102, 126, 234, 0.8); }
+        }
+
+        .start-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+        }
+
+        .start-button:active {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 480px) {
+            .start-button {
+                padding: 15px 40px;
+                font-size: 1.2em;
+            }
+        }
+
+        /* Proceed Button */
+        .proceed-button {
+            background: linear-gradient(135deg, #6bcf7f, #51cf66);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            font-size: 1.5em;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(107, 207, 127, 0.4);
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            display: none;
+            animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .proceed-button.show {
+            display: inline-block;
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .proceed-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(107, 207, 127, 0.6);
+        }
+
+        .proceed-button:active {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 480px) {
+            .proceed-button {
+                padding: 15px 40px;
+                font-size: 1.2em;
+            }
+        }
+
+        /* Congrats Modal */
+        .congrats-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+
+        .congrats-modal.hidden {
+            display: none;
+        }
+
+        .congrats-content {
+            background: linear-gradient(135deg, #ffd93d, #ffa400);
+            border-radius: 40px;
+            padding: 50px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+            animation: popIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (max-width: 480px) {
+            .congrats-content {
+                padding: 30px 20px;
+                border-radius: 30px;
+            }
+        }
+
+        .congrats-fireworks {
+            position: absolute;
+            font-size: 3em;
+            animation: firework 1s ease-out infinite;
+        }
+
+        .congrats-fireworks:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .congrats-fireworks:nth-child(2) {
+            top: 15%;
+            right: 10%;
+            animation-delay: 0.3s;
+        }
+
+        .congrats-fireworks:nth-child(3) {
+            bottom: 20%;
+            left: 15%;
+            animation-delay: 0.6s;
+        }
+
+        .congrats-fireworks:nth-child(4) {
+            bottom: 15%;
+            right: 15%;
+            animation-delay: 0.9s;
+        }
+
+        @keyframes firework {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.5) rotate(180deg);
+                opacity: 0;
+            }
+        }
+
+        .congrats-title {
+            font-family: 'Chewy', cursive;
+            font-size: 3em;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 2;
+            animation: shake 0.5s infinite;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: rotate(-2deg); }
+            50% { transform: rotate(2deg); }
+        }
+
+        @media (max-width: 480px) {
+            .congrats-title {
+                font-size: 2em;
+            }
+        }
+
+        .congrats-emoji {
+            font-size: 5em;
+            margin: 20px 0;
+            animation: spin 2s linear infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 480px) {
+            .congrats-emoji {
+                font-size: 3.5em;
+            }
+        }
+
+        .congrats-text {
+            font-size: 1.5em;
+            color: white;
+            margin-bottom: 30px;
+            font-weight: 600;
+            position: relative;
+            z-index: 2;
+        }
+
+        @media (max-width: 480px) {
+            .congrats-text {
+                font-size: 1.2em;
+            }
+        }
+
+        .reset-button {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 20px 50px;
+            font-size: 1.5em;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .reset-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .reset-button:active {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 480px) {
+            .reset-button {
+                padding: 15px 40px;
+                font-size: 1.2em;
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+        }
+
+        .container {
+            background: white;
+            border-radius: 40px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+                border-radius: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 25px 15px;
+                border-radius: 20px;
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            }
+        }
+
+        h1 {
+            font-family: 'Chewy', cursive;
+            font-size: 2.5em;
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 0 #ffd93d;
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 480px) {
+            .subtitle {
+                font-size: 1em;
+                margin-bottom: 20px;
+            }
+        }
+
+        .password-input-wrapper {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 20px;
+            font-size: 1.5em;
+            border: 4px solid #e0e0e0;
+            border-radius: 20px;
+            font-family: 'Fredoka', sans-serif;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        @media (max-width: 480px) {
+            .password-input {
+                padding: 15px;
+                font-size: 1.2em;
+            }
+        }
+
+        .password-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .strength-meter {
+            height: 40px;
+            background: #f0f0f0;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .strength-fill {
+            height: 100%;
+            width: 0%;
+            transition: all 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+            font-size: 1.2em;
+        }
+
+        .weak {
+            background: linear-gradient(90deg, #ff6b6b, #ee5a6f);
+            width: 33%;
+        }
+
+        .medium {
+            background: linear-gradient(90deg, #ffd93d, #f4a261);
+            width: 66%;
+        }
+
+        .strong {
+            background: linear-gradient(90deg, #6bcf7f, #51cf66);
+            width: 100%;
+        }
+
+        .checklist {
+            background: #f8f9ff;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .checklist-title {
+            font-size: 1.3em;
+            color: #667eea;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 10px;
+            background: white;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+            font-size: 1em;
+        }
+
+        @media (max-width: 480px) {
+            .checklist-item {
+                padding: 10px;
+                font-size: 0.9em;
+            }
+        }
+
+        .checklist-item.complete {
+            border-color: #6bcf7f;
+            background: #e8f8ea;
+        }
+
+        .check-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 1.5em;
+            transition: all 0.3s ease;
+        }
+
+        .checklist-item.complete .check-icon {
+            background: #6bcf7f;
+            animation: pop 0.5s ease;
+        }
+
+        @keyframes pop {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .celebration {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #ffd93d, #ffa400);
+            border-radius: 20px;
+            display: none;
+            animation: slideDown 0.5s ease;
+        }
+
+        .celebration.show {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .celebration h2 {
+            font-family: 'Chewy', cursive;
+            font-size: 2em;
+            color: white;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 480px) {
+            .celebration h2 {
+                font-size: 1.5em;
+            }
+        }
+
+        .celebration p {
+            font-size: 1.2em;
+            color: white;
+        }
+
+        @media (max-width: 480px) {
+            .celebration p {
+                font-size: 1em;
+            }
+        }
+
+        .emoji {
+            font-size: 3em;
+            margin-bottom: 10px;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .tips {
+            background: #fff3cd;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 5px solid #ffd93d;
+        }
+
+        .tips h3 {
+            color: #856404;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .tips ul {
+            list-style: none;
+            color: #856404;
+        }
+
+        .tips li {
+            padding: 5px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .tips li:before {
+            content: "🌟";
+            position: absolute;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Story Modal -->
+    <div class="story-modal" id="storyModal">
+        <div class="story-content">
+            <!-- Floating brainrot images in background of modal -->
+            <div class="story-bg-image">
+                <span></span>
+                <!-- Add brainrot image: -->
+                <img src="Cappuccino_Assassino.jpg" alt="Brainrot decoration 1">
+            </div>
+            <div class="story-bg-image">
+                <span></span>
+                <!-- Add brainrot image: -->
+                <img src="ChimpanziniBananini.jpg" alt="Brainrot decoration 2">
+            </div>
+            <div class="story-bg-image">
+                <span></span>
+                <!-- Add brainrot image: -->
+                <img src="Tung_Tung_Tung_Sahur.jpg" alt="Brainrot decoration 3">
+            </div>
+            <div class="story-bg-image">
+                <span></span>
+                <!-- Add brainrot image: -->
+                <img src="Ballerina_cappucinaaaa2121.jpg" alt="Brainrot decoration 4">
+            </div>
+
+            <div class="story-title">
+                ⚠️ DANGER ALERT! ⚠️
+            </div>
+            
+            <div class="story-villain-container">
+                <div class="story-villain">
+                    <span></span>
+                    <!-- Add your brainrot villain image: -->
+                    <img src="Lil_wayne.jpg" alt="Brainrot villain 1">
+                </div>
+                <div class="story-villain">
+                    <span></span>
+                    <!-- Add your brainrot villain image: -->
+                    <img src="Skibidi_toilet.jpg" alt="Brainrot villain 3">
+                </div>
+                <div class="story-villain">
+                    <span></span>
+                    <!-- Add your brainrot villain image: -->
+                    <img src="ZombieTralala.jpg" alt="Brainrot villain 4">
+                </div>
+                <div class="story-villain">
+                    <span></span>
+                    <!-- Add your brainrot villain image: -->
+                     <img src="VampiraCappuccina.jpg" alt="Brainrot villain 5">
+                </div>
+            </div>
+
+            <p class="story-text">
+                <strong>OH NO!</strong> 😱<br>
+                The evil <strong>BRAINROT MONSTERS</strong> are coming to steal your data!<br>
+                They want your photos, your games, and all your secrets! 🎮📸🔐
+            </p>
+
+            <div class="story-warning">
+                ⚡ You need a SUPER STRONG PASSWORD to protect yourself! ⚡
+            </div>
+
+            <p class="story-text">
+                Can you create a password strong enough to keep the Brainrot Monsters away? 🛡️
+            </p>
+
+            <button class="start-button" id="startButton">
+                LET'S DEFEND! 🦸‍♂️
+            </button>
+        </div>
+    </div>
+
+    <!-- Background image placeholders - add your brainrot images here -->
+    <div class="bg-image">
+        <span></span>
+        <!-- Uncomment and add your image: -->
+        <img src="Liliri_Lalira.jpg" alt="Background decoration 1">
+    </div>
+    <div class="bg-image">
+        <span></span>
+        <!-- Uncomment and add your image: -->
+        <img src="Orcalero_Orcala.jpg" alt="Background decoration 2">
+    </div>
+    <div class="bg-image">
+        <span></span>
+        <!-- Uncomment and add your image: -->
+        <img src="Fourtyone.jpg" alt="Background decoration 3">
+    </div>
+    <div class="bg-image">
+        <span></span>
+        <!-- Uncomment and add your image: -->
+        <img src="TralaleroTralala.jpg" alt="Background decoration 4">
+    </div>
+
+    <div class="container">
+        <h1>Brainrot Defense!!</h1>
+        <p class="subtitle">Make the STRONGEST password you can!</p>
+
+        <div class="password-input-wrapper">
+            <input 
+                type="text" 
+                class="password-input" 
+                id="passwordInput" 
+                placeholder="Type your password here..."
+                autocomplete="off"
+            >
+        </div>
+
+        <div class="strength-meter">
+            <div class="strength-fill" id="strengthFill"></div>
+        </div>
+
+        <div class="checklist">
+            <div class="checklist-title">Password Power Checklist:</div>
+            
+            <div class="checklist-item" id="check1">
+                <div class="check-icon" id="icon1">❌</div>
+                <div>At least 8 characters long</div>
+            </div>
+
+            <div class="checklist-item" id="check2">
+                <div class="check-icon" id="icon2">❌</div>
+                <div>Has BIG letters (ABC)</div>
+            </div>
+
+            <div class="checklist-item" id="check3">
+                <div class="check-icon" id="icon3">❌</div>
+                <div>Has small letters (abc)</div>
+            </div>
+
+            <div class="checklist-item" id="check4">
+                <div class="check-icon" id="icon4">❌</div>
+                <div>Has numbers (123)</div>
+            </div>
+
+            <div class="checklist-item" id="check5">
+                <div class="check-icon" id="icon5">❌</div>
+                <div>Has special symbols (!@#$)</div>
+            </div>
+        </div>
+
+        <div class="celebration" id="celebration">
+            <div class="emoji">🎉🎊🎈</div>
+            <h2>SUPER STRONG PASSWORD!</h2>
+            <p>You're a Password Champion! 🏆</p>
+            <button class="proceed-button" id="proceedButton">
+                DEFEND YOUR DATA! 🛡️
+            </button>
+        </div>
+
+        <div class="tips">
+            <h3>🌟 Password Tips for Kids:</h3>
+            <ul>
+                <li>Never share your password with anyone (except parents!)</li>
+                <li>Make it long and tricky!</li>
+                <li>Mix BIG letters, small letters, and numbers</li>
+                <li>Don't use your name or birthday</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Congrats Modal -->
+    <div class="congrats-modal hidden" id="congratsModal">
+        <div class="congrats-content">
+            <div class="congrats-fireworks">🎆</div>
+            <div class="congrats-fireworks">✨</div>
+            <div class="congrats-fireworks">🎇</div>
+            <div class="congrats-fireworks">💫</div>
+            
+            <h1 class="congrats-title">🎉 MISSION COMPLETE! 🎉</h1>
+            <div class="congrats-emoji">🏆</div>
+            <p class="congrats-text">
+                YOU DID IT!<br>
+                Your super strong password kept the<br>
+                Brainrot Monsters away! 🛡️<br>
+                <br>
+                You're a PASSWORD HERO! 🦸‍♂️
+            </p>
+            <button class="reset-button" id="resetButton">
+                PLAY AGAIN! 🔄
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Story modal functionality
+        const storyModal = document.getElementById('storyModal');
+        const startButton = document.getElementById('startButton');
+
+        startButton.addEventListener('click', function() {
+            storyModal.classList.add('hidden');
+        });
+
+        // Congrats modal functionality
+        const congratsModal = document.getElementById('congratsModal');
+        const proceedButton = document.getElementById('proceedButton');
+        const resetButton = document.getElementById('resetButton');
+
+        proceedButton.addEventListener('click', function() {
+            congratsModal.classList.remove('hidden');
+        });
+
+        resetButton.addEventListener('click', function() {
+            // Hide congrats modal
+            congratsModal.classList.add('hidden');
+            
+            // Reset the password input
+            passwordInput.value = '';
+            
+            // Reset all checks
+            Object.keys(checks).forEach(key => {
+                const check = checks[key];
+                check.element.classList.remove('complete');
+                check.icon.textContent = '❌';
+            });
+            
+            // Reset strength meter
+            strengthFill.className = 'strength-fill';
+            strengthFill.style.width = '0%';
+            strengthFill.textContent = '';
+            
+            // Hide celebration and proceed button
+            celebration.classList.remove('show');
+            proceedButton.classList.remove('show');
+            
+            // Show story modal again
+            storyModal.classList.remove('hidden');
+        });
+
+        // Main game functionality
+        const passwordInput = document.getElementById('passwordInput');
+        const strengthFill = document.getElementById('strengthFill');
+        const celebration = document.getElementById('celebration');
+
+        const checks = {
+            check1: { element: document.getElementById('check1'), icon: document.getElementById('icon1'), test: (pwd) => pwd.length >= 8 },
+            check2: { element: document.getElementById('check2'), icon: document.getElementById('icon2'), test: (pwd) => /[A-Z]/.test(pwd) },
+            check3: { element: document.getElementById('check3'), icon: document.getElementById('icon3'), test: (pwd) => /[a-z]/.test(pwd) },
+            check4: { element: document.getElementById('check4'), icon: document.getElementById('icon4'), test: (pwd) => /[0-9]/.test(pwd) },
+            check5: { element: document.getElementById('check5'), icon: document.getElementById('icon5'), test: (pwd) => /[!@#$%^&*(),.?":{}|<>]/.test(pwd) }
+        };
+
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+            let completedChecks = 0;
+
+            // Check each requirement
+            Object.keys(checks).forEach(key => {
+                const check = checks[key];
+                if (check.test(password)) {
+                    check.element.classList.add('complete');
+                    check.icon.textContent = '✅';
+                    completedChecks++;
+                } else {
+                    check.element.classList.remove('complete');
+                    check.icon.textContent = '❌';
+                }
+            });
+
+            // Update strength meter
+            strengthFill.className = 'strength-fill';
+            if (completedChecks === 0) {
+                strengthFill.style.width = '0%';
+                strengthFill.textContent = '';
+            } else if (completedChecks <= 2) {
+                strengthFill.classList.add('weak');
+                strengthFill.textContent = '😟 Weak';
+            } else if (completedChecks <= 3) {
+                strengthFill.classList.add('medium');
+                strengthFill.textContent = '😊 Good!';
+            } else if (completedChecks === 5) {
+                strengthFill.classList.add('strong');
+                strengthFill.textContent = '💪 SUPER STRONG!';
+                celebration.classList.add('show');
+                proceedButton.classList.add('show');
+            } else {
+                celebration.classList.remove('show');
+                proceedButton.classList.remove('show');
+            }
+
+            if (completedChecks < 5) {
+                celebration.classList.remove('show');
+                proceedButton.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>
